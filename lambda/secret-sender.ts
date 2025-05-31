@@ -4,7 +4,6 @@ import { PublishCommand, PublishInput, SNSClient } from "@aws-sdk/client-sns";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { Handler } from "aws-lambda";
 import { publicEncrypt } from "node:crypto";
-import path = require("node:path");
 
 const clientS3 = new S3Client({region: process.env.REGION});
 const clientSM = new SecretsManagerClient({region: process.env.REGION});

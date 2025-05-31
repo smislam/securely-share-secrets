@@ -22,7 +22,7 @@ export const handler: Handler = async (event, context) => {
 
     return {
         statusCode: 200,
-        body: JSON.stringify('New Secret added '),
+        body: JSON.stringify('New Secret added'),
     };
 };
 
