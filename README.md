@@ -41,7 +41,8 @@ autonumber
 sequenceDiagram
 autonumber
     Client->>+Provider S3: Fetch encrypted secret file<br/> using Pre-signed URL
-    Provider S3-->>+Client: Returns encrypted secret file
+    destroy Provider S3
+    Provider S3-->>+Client: Returns encrypted<br/>secret file
     Client->>+Client S3: Store encrypted secret file to S3
     Client->>+Client: Decrypt the encrypted secret<br/> using private certificate
     Client->>+Secrets Manager: Store the decrypted secret
