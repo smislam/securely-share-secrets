@@ -1,8 +1,6 @@
 # Securely Transfer Secrets to your Clients
 In this example, we create workflows to securely transfer secrets between clients.  The AWS Secrets Manager cross-account access to share secrets between clients is a better approach.  However, in certain cases this may not possible when you have many clients that you will have to configure separately.  
 
-PS: The Oauth 2.0 Client-Credentials flows with JWT where Secrets aren't exchanged is the best approach to avoid secret sharing.
-
 This application securely shares secrets using elaborate workflows affective both clients.  
 
 **Sending Application Workflow**
