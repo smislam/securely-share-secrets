@@ -36,14 +36,14 @@ This application is developed using AWS CDK in TypeScript.
     * Generate the private key: `openssl genrsa -out client-one-private.pem 4096`
     * Generate the public key: `openssl rsa -in client-one-private.pem -out client-one-public.pem -pubout`
 * Check your email for AWS SNS message with S3 presigend URL.  The URL is valid for 30 minutes.
-    * ![image](encrypted-secret-email.PNG) "Example SNS Credentials email from AWS")
-    * ![image](encrypted-secret-content.PNG) "Example SNS Credentials message content from AWS")
+    * ![image](encrypted-secret-email.PNG "Example SNS Credentials email from AWS")
+    * ![image](encrypted-secret-content.PNG "Example SNS Credentials message content from AWS")
 * Invoke the API Gateway URL for the new unencrypted Secrets Manager entry to be created
 * Verify that the new Secret is created
-* ![image](resulted-secret.PNG) "Example of the two secrets")
+* ![image](resulted-secret.PNG "Example of the two secrets")
 
 ## Considerations
-* Rather that creating a new secret each time, *client* should update existing secrets.  Remember this may require an application reboot based on your usecase.
+* Rather that creating a new secret each time, *client* should update existing secrets.  Remember, this may require an application reboot based on your usecase.
 * I didn't include Secret Rotation workflow in this example. If you have secrets rotations, you will need to automate the process to run from those events.
 * There are many opportunities to simplify this solution
 
