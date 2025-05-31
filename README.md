@@ -21,7 +21,7 @@ autonumber
     Client->>+Client: Verify Email using SNS Message
     rect rgb(128, 162, 207)
     Provider->>+S3: Store the Public Certificate
-    Secrets Manager-->>+Provider: Fetch Secret
+    Secrets Manager->>+Provider: Get Secret
     Provider->>+Provider: Encrypt the Secret<br/>using Public Key
     Provider->>+S3: Store the Encrypted file
     Provider->>+Provider: Create Pre-signed URL
@@ -43,7 +43,7 @@ autonumber
     Client->>+Provider S3: Fetch Encrypted Secret file<br/> using Pre-signed URL
     Provider S3-->>+Client: Returns Encrypted file
     Client->>+Client S3: Store Encrypted Secret to S3
-    Client->>+Client: Decrypt the Secret<br/> using Private Certificate
+    Client->>+Client: Decrypt the encrypted Secret<br/> using Private Certificate
     Client->>+Secrets Manager: Store the decrypted Secret    
 ```
 * Download the S3 file using the Presign URL
