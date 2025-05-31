@@ -1,5 +1,5 @@
 import { GetObjectCommand, S3Client } from "@aws-sdk/client-s3";
-import { CreateSecretCommand, PutSecretValueCommand, SecretsManagerClient } from "@aws-sdk/client-secrets-manager";
+import { CreateSecretCommand, SecretsManagerClient } from "@aws-sdk/client-secrets-manager";
 import { Handler } from "aws-lambda";
 import { privateDecrypt } from "node:crypto";
 

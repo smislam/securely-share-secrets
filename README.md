@@ -78,7 +78,7 @@ This application is developed using AWS CDK in TypeScript.
 * ![image](resulted-secret.PNG "Example of the two secrets")
 
 ## Considerations
-* Rather that creating a new secret each time, *client* should update existing secrets. Remember, this may require an application reboot based on your usecase.
+* Rather than creating a new secret each time, *client* could update existing secrets. Remember, this may require an application reboot based on your usecase.
 * I didn't include Secret Rotation workflow in this example. If you have secret rotations, you will need to automate the process to run from those events.
 * There are many opportunities to simplify this solution
     * Perhaps use Step Functions for these workflows.
