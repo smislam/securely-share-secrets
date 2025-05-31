@@ -8,7 +8,7 @@ This application securely shares secrets using elaborate workflows for both clie
 ```mermaid
 sequenceDiagram
 autonumber
-    Client->>+Provider: Send Email and Public Certificate
+    Client->>+Provider: Send email and public certificate
 
     box Provider Workflow
         participant Provider
@@ -17,16 +17,16 @@ autonumber
         participant Secrets Manager
     end
     
-    SNS->>+Client: Send Email verification email
-    Client->>+Client: Verify Email using SNS Message
+    SNS->>+Client: Send email verification email
+    Client->>+Client: Verify email using SNS message
     rect rgb(128, 162, 207)
-    Provider->>+S3: Store the Public Certificate
-    Secrets Manager->>+Provider: Get Secret
-    Provider->>+Provider: Encrypt the Secret<br/>using Public Key
-    Provider->>+S3: Store the Encrypted file
-    Provider->>+Provider: Create Pre-signed URL
-    Provider->>+SNS: Send message using<br/>Client Email address   
-    SNS->>+Client: Send email to Client
+    Provider->>+S3: Store the public certificate
+    Secrets Manager->>+Provider: Get secret
+    Provider->>+Provider: Encrypt the secret<br/>using public certificate
+    Provider->>+S3: Store the encrypted file
+    Provider->>+Provider: Create pre-signed URL
+    Provider->>+SNS: Send email using<br/>client's email address   
+    SNS->>+Client: Send email to client
     end
 ```
 * Ask the Client to share their RSA Public Certificate
@@ -34,19 +34,20 @@ autonumber
 * Encrypt the Secret with Client's Public Certificate
 * Save the encrypted secret in S3 bucket
 * Presign the URL for Client Download
-* Send a SNS message to Client which will email them the S3 presigned URL link.
+* Send a SNS message to Client which will email them the S3 pre-signed URL link.
 
 **Receiving Application Workflow**
 ```mermaid
 sequenceDiagram
 autonumber
-    Client->>+Provider S3: Fetch Encrypted Secret file<br/> using Pre-signed URL
-    Provider S3-->>+Client: Returns Encrypted file
-    Client->>+Client S3: Store Encrypted Secret to S3
-    Client->>+Client: Decrypt the encrypted Secret<br/> using Private Certificate
-    Client->>+Secrets Manager: Store the decrypted Secret    
+    Client->>+Provider S3: Fetch encrypted secret file<br/> using Pre-signed URL
+    Provider S3-->>+Client: Returns encrypted secret file
+    Client->>+Client S3: Store encrypted secret file to S3
+    Client->>+Client: Decrypt the encrypted secret<br/> using private certificate
+    Client->>+Secrets Manager: Store the decrypted secret
+    Client->>+Client: Reboot systems if necessary
 ```
-* Download the S3 file using the Presign URL
+* Download the S3 file using the Pre-signed URL
 * Decrypt the file content using the RSA Private Certificate
 * Store the decrypted Secret in AWS Secret Manager
 
@@ -55,9 +56,9 @@ This application is developed using AWS CDK in TypeScript.
 ## What does this build?
 * Creates a S3 bucket for holding the certificates
 * Creates a lambda that performs the Sender workflow
-* Creates another lambda that performs the receiver workflow
+* Creates another lambda that performs the Receiver workflow
 * Creates an API Gateway endpoint for the receiver lambda invocation in this example
-  * You may want to create automation to invoke the lambda. One example can be to write the file to S3 and have S3 event invoke the lambda
+  * You may want to create automation to invoke the lambda. One such example can be to write the file to S3 and have S3 event invoke the lambda.
 
 ## Steps to run and test
 * Run the CDK Code and wait for it to finish
