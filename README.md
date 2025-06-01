@@ -61,6 +61,8 @@ This application is developed using AWS CDK in TypeScript.
 * Creates an API Gateway endpoint for the receiver lambda invocation in this example
   * You may want to create automation to invoke the lambda. One such example can be to write the file to S3 and have S3 event invoke the lambda.
 
+*Note: This example uses both workflows in one.  For example, we do not have to download the encrypted secret and store on client's S3 since we are using the same S3 buket for both of these workflows*
+
 ## Steps to run and test
 * Run the CDK Code and wait for it to finish
 * Check your email from AWS for SNS message Subscription verification
@@ -73,8 +75,8 @@ This application is developed using AWS CDK in TypeScript.
 * Check your email for AWS SNS message with S3 presigend URL
     * ![image](encrypted-secret-email.PNG "Example SNS Credentials email from AWS")
     * ![image](encrypted-secret-content.PNG "Example SNS Credentials message content from AWS")
-* Invoke the API Gateway endpoint so that a new decrypted Secrets Manager entry is created
-* Verify that the new Secret is created in AWS Secrets Manager
+* Invoke the API Gateway endpoint. The lambda behind the API will create a new decrypted Secrets Manager entry.
+* Verify that the new secret is same as the original secret
 * ![image](resulted-secret.PNG "Example of the two secrets")
 
 ## Considerations
