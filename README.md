@@ -1,7 +1,7 @@
 # Securely Transfer Secrets to your Clients
-In this example, we create workflows to securely transfer secrets between clients.  The [AWS Secrets Manager cross-account access](https://docs.aws.amazon.com/secretsmanager/latest/userguide/auth-and-access_examples_cross.html) to share secrets between clients is a better approach.  However, in certain cases this may not possible when you have many clients that you will have to configure separately.  
+In this example, we provide a solution to securely transfer secrets between clients.  The [AWS Secrets Manager cross-account access](https://docs.aws.amazon.com/secretsmanager/latest/userguide/auth-and-access_examples_cross.html) to share secrets between clients is a great approch.  However, in certain cases this may not possible when you have many clients that you will have to configure separately.  
 
-This application securely shares secrets using elaborate workflows for both clients.
+This application securely shares secrets with clients using elaborate workflows.
 
 ## Sequence Diagrams
 **Sending Application Workflow**
@@ -33,7 +33,7 @@ autonumber
 * Create Secret for Client
 * Encrypt the Secret with Client's Public Certificate
 * Save the encrypted secret in S3 bucket
-* Presign the URL for Client Download
+* Pre-sign the URL for Client Download
 * Send a SNS message to Client which will email them the S3 pre-signed URL link.
 
 **Receiving Application Workflow**
@@ -70,15 +70,15 @@ This application is developed using AWS CDK in TypeScript.
     * Generate the private key: `openssl genrsa -out client-one-private.pem 4096`
     * Generate the public key: `openssl rsa -in client-one-private.pem -out client-one-public.pem -pubout`
 * Upload the Certificates to the S3 Bucket
-* Check your email for AWS SNS message with S3 presigend URL.  The URL is valid for 30 minutes.
+* Check your email for AWS SNS message with S3 presigend URL
     * ![image](encrypted-secret-email.PNG "Example SNS Credentials email from AWS")
     * ![image](encrypted-secret-content.PNG "Example SNS Credentials message content from AWS")
-* Invoke the API Gateway endpoint for the new decrypted Secrets Manager entry to be created
-* Verify that the new Secret is created
+* Invoke the API Gateway endpoint so that a new decrypted Secrets Manager entry is created
+* Verify that the new Secret is created in AWS Secrets Manager
 * ![image](resulted-secret.PNG "Example of the two secrets")
 
 ## Considerations
-* Rather than creating a new secret each time, *client* could update existing secrets. Remember, this may require an application reboot based on your usecase.
+* Rather than creating a new secret each time, *client* could update existing secrets. Remember, this may require an application reboot based on your setup.
 * I didn't include Secret Rotation workflow in this example. If you have secret rotations, you will need to automate the process to run from those events.
 * There are many opportunities to simplify this solution
     * Perhaps use Step Functions for these workflows.
