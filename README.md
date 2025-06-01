@@ -1,5 +1,5 @@
 # Securely Transfer Secrets to your Clients
-In this example, we provide a solution to securely transfer secrets between clients.  The [AWS Secrets Manager cross-account access](https://docs.aws.amazon.com/secretsmanager/latest/userguide/auth-and-access_examples_cross.html) to share secrets between clients is a great approch.  However, in certain cases this may not possible when you have many clients that you will have to configure separately.  
+In this example, we provide a solution to securely transfer secrets between clients.  The [AWS Secrets Manager cross-account access](https://docs.aws.amazon.com/secretsmanager/latest/userguide/auth-and-access_examples_cross.html) to share secrets between clients is a great approch.  However, in certain cases this may not be possible when you have many clients that you will have to configure separately.  
 
 This application securely shares secrets with clients using elaborate workflows.
 
