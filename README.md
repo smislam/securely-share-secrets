@@ -25,8 +25,8 @@ autonumber
     Provider->>+Provider: Encrypt the secret<br/>using public certificate
     Provider->>+S3: Store the encrypted file
     Provider->>+Provider: Create pre-signed URL
-    Provider->>+SNS: Send email using<br/>client's email address   
-    SNS->>+Client: Send email to client
+    Provider->>+SNS: Send message to<br/>SNS topic   
+    SNS-->>+Client: Send email to client
     end
 ```
 * Ask the Client to share their RSA Public Certificate
