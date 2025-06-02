@@ -9,6 +9,7 @@ import { LambdaDestination } from 'aws-cdk-lib/aws-s3-notifications';
 import { Secret } from 'aws-cdk-lib/aws-secretsmanager';
 import { Topic } from 'aws-cdk-lib/aws-sns';
 import { EmailSubscription } from 'aws-cdk-lib/aws-sns-subscriptions';
+import { StringParameter } from 'aws-cdk-lib/aws-ssm';
 import { Construct } from 'constructs';
 import path = require('path');
 
@@ -34,7 +35,7 @@ export class SecurelyShareSecretsStack extends cdk.Stack {
       topicName: 'secret-sender-topic'
     });
     topic.applyRemovalPolicy(cdk.RemovalPolicy.DESTROY);
-    topic.addSubscription(new EmailSubscription('client@nowhere.com'));
+    topic.addSubscription(new EmailSubscription(StringParameter.valueForTypedStringParameterV2(this, 'client-email-address')));
     
     const sender = new NodejsFunction(this, 'secret-sender', {
       handler: 'handler',

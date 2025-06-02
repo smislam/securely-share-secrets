@@ -1,7 +1,7 @@
-# Securely Transfer Secrets to your Clients
-In this example, we provide a solution to securely transfer secrets between clients.  The [AWS Secrets Manager cross-account access](https://docs.aws.amazon.com/secretsmanager/latest/userguide/auth-and-access_examples_cross.html) to share secrets between clients is a great approch.  However, in certain cases this may not be possible when you have many clients that you will have to configure separately.  
+# Securely Share Secrets with your Clients
+In this example, we provide a solution to securely share secrets with clients.  The [AWS Secrets Manager cross-account access](https://docs.aws.amazon.com/secretsmanager/latest/userguide/auth-and-access_examples_cross.html) is a great way to securely share secrets with clients. However, in certain cases this may not be possible when you have many clients that you will have to configure each separately.
 
-This application securely shares secrets with clients using elaborate workflows.
+This application uses `Public-key cryptography` based on [RSA Asymmetric encryption](https://www.ibm.com/think/topics/asymmetric-encryption) to encrypt Secrets.  Then it securely shares secrets with clients using the following workflow.
 
 ## Sequence Diagrams
 **Sending Application Workflow**
@@ -10,7 +10,7 @@ sequenceDiagram
 autonumber
     Client->>+Provider: Send email and public certificate
 
-    box Provider Workflow
+    box Provider(Sender) Workflow
         participant Provider
         participant SNS
         participant S3
@@ -61,17 +61,17 @@ This application is developed using AWS CDK in TypeScript.
 * Creates an API Gateway endpoint for the receiver lambda invocation in this example
   * You may want to create automation to invoke the lambda. One such example can be to write the file to S3 and have S3 event invoke the lambda.
 
-*Note: This example uses both workflows in one.  For example, we do not have to download the encrypted secret and store on client's S3 since we are using the same S3 buket for both of these workflows*
+*Note: This example uses both workflows in one.  For example, we do not need to download the encrypted secret and store on client's S3 since we are using the same S3 buket for both of these workflows.*
 
 ## Steps to run and test
-* Run the CDK Code and wait for it to finish
+* Run the CDK code and wait for it to finish
 * Check your email from AWS for SNS message Subscription verification
     * ![image](sns-confirmation.PNG "Example SNS Confirmation message from AWS")
 * Accept and approve the confirmation
-* Create the RSA Private and Public Certificates
+* Create the RSA Private and Public certificates
     * Generate the private key: `openssl genrsa -out client-one-private.pem 4096`
     * Generate the public key: `openssl rsa -in client-one-private.pem -out client-one-public.pem -pubout`
-* Upload the Certificates to the S3 Bucket
+* Upload the certificates to the S3 Bucket
 * Check your email for AWS SNS message with S3 presigend URL
     * ![image](encrypted-secret-email.PNG "Example SNS Credentials email from AWS")
     * ![image](encrypted-secret-content.PNG "Example SNS Credentials message content from AWS")
@@ -81,11 +81,14 @@ This application is developed using AWS CDK in TypeScript.
 
 ## Considerations
 * Rather than creating a new secret each time, *client* could update existing secrets. Remember, this may require an application reboot based on your setup.
-* I didn't include Secret Rotation workflow in this example. If you have secret rotations, you will need to automate the process to run from those events.
-* There are many opportunities to simplify this solution
-    * Perhaps use Step Functions for these workflows.
+* I didn't include `Secret Rotation` workflow in this application. If you have secret rotations, you will need to automate the process to run from those events.
+* There are many opportunities to simplify this solution.  Some examples:
+    * use Step Functions for these workflows
+    * rather than emailing Public Certificate, you can create S3 pre-sign URL for your client to download
+    * create separate Key Pairs for clients
 
 ## References
+* [RSA Cryptography Specifications](https://www.rfc-editor.org/rfc/rfc8017)
 * [OpenSSL](https://www.openssl.org/)
 * [Node Crypto](https://nodejs.org/api/crypto.html)
 * [Amazon Secrets Manager](https://aws.amazon.com/secrets-manager/)
