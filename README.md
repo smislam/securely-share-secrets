@@ -3,7 +3,7 @@ In this example, we provide a solution to securely share secrets with clients.  
 
 This application uses `Public-key cryptography` based on [RSA Asymmetric encryption](https://www.ibm.com/think/topics/asymmetric-encryption) to encrypt secret.  Then, it securely shares the secret with client using the following workflow.
 
-## Sequence Diagrams
+## Workflows
 **Sending Application Workflow**
 ```mermaid
 sequenceDiagram
