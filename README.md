@@ -61,7 +61,7 @@ This application is developed using AWS CDK in TypeScript.
 * Creates an API Gateway endpoint for the receiver lambda invocation in this example
   * You may want to create automation to invoke the lambda. One such example can be to write the file to S3 and have S3 event invoke the lambda.
 
-*Note: This example uses both workflows in one.  For example, we do not need to download the encrypted secret and store on client's S3 since we are using the same S3 buket for both of these workflows.*
+*Note: This example uses both workflows in one.  For example, we do not need to download the encrypted secret and store on client's S3 since we are using the same S3 bucket for both of these workflows.*
 
 ## Steps to run and test
 * Run the CDK code and wait for it to finish
